@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -392,27 +392,39 @@ function App() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const toggleMusic = () => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(bgm);
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.05;
-    }
+  useEffect(() => {
+  const audio = new Audio(bgm);
+  audio.loop = true;
+  audio.volume = 0.25;
+  audioRef.current = audio;
 
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch((error) => {
-          console.error("Unable to play BGM:", error);
-        });
-    }
+  const startMusic = () => {
+    audio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch(() => {
+        // Browser blocked autoplay.
+        setIsPlaying(false);
+      });
+
+    document.removeEventListener("click", startMusic);
+    document.removeEventListener("keydown", startMusic);
   };
+
+  startMusic();
+
+  document.addEventListener("click", startMusic);
+  document.addEventListener("keydown", startMusic);
+
+  return () => {
+    audio.pause();
+    audio.src = "";
+    document.removeEventListener("click", startMusic);
+    document.removeEventListener("keydown", startMusic);
+  };
+}, []);
 
   const go = (id: string) => {
     document
