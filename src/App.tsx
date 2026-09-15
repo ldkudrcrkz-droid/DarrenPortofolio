@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -12,14 +12,18 @@ import {
   Gamepad2,
   Users,
   Speaker,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
+
+import bgm from "./assets/BGM.mp3";
 
 import darren from "./photo/darren.jpeg";
 
 import taskweaver1 from "./projects/taskweaver/1.jpeg";
 import taskweaver2 from "./projects/taskweaver/2.jpeg";
 import taskweaver4 from "./projects/taskweaver/4.jpeg";
-  
+
 import calorIQ1 from "./projects/calorIQ/1.jpeg";
 import calorIQ2 from "./projects/calorIQ/2.jpeg";
 import calorIQ3 from "./projects/calorIQ/3.jpeg";
@@ -151,7 +155,8 @@ const projects: Project[] = [
 
     github: {
       frontend: "https://github.com/Pr13stess/SonataFrontend",
-      backend: "https://github.com/ldkudrcrkz-droid/SonataBackend"
+      backend:
+        "https://github.com/ldkudrcrkz-droid/SonataBackend",
     },
 
     images: [
@@ -178,13 +183,14 @@ const projects: Project[] = [
 
     tech: ["BLENDER", "UNITY", "3D"],
 
-    itchio: "https://jlhady.itch.io/room-to-grow",
+    itchio:
+      "https://jlhady.itch.io/room-to-grow",
 
     images: [
-     roomtogrow1,
-     roomtogrow2, 
-     roomtogrow3,
-     roomtogrow4,
+      roomtogrow1,
+      roomtogrow2,
+      roomtogrow3,
+      roomtogrow4,
     ],
 
     icon: Gamepad2,
@@ -210,7 +216,7 @@ const projects: Project[] = [
       measles1,
       measles2,
       measles3,
-      measles4
+      measles4,
     ],
 
     icon: Cpu,
@@ -230,23 +236,25 @@ const projects: Project[] = [
 
     role: "AI / DEEP LEARNING / SPEECH RECOGNITION",
 
-    tech: [ "PYTHON",
-    "DEEP LEARNING",
-    "SPEECH RECOGNITION",
-    "AUDIO PROCESSING"],
+    tech: [
+      "PYTHON",
+      "DEEP LEARNING",
+      "SPEECH RECOGNITION",
+      "AUDIO PROCESSING",
+    ],
 
     github: {
-      main: "https://github.com/ldkudrcrkz-droid/SpeechCommandRecog",
+      main:
+        "https://github.com/ldkudrcrkz-droid/SpeechCommandRecog",
     },
 
     images: [
       speechcommand1,
-      speechcommand2
+      speechcommand2,
     ],
 
     icon: Speaker,
   },
-  
 ];
 
 const experiences: Experience[] = [
@@ -270,8 +278,7 @@ const experiences: Experience[] = [
       "Supported the execution of the Nippon Club expo",
     ],
 
-    images: [
-    ],
+    images: [],
   },
 
   {
@@ -319,8 +326,7 @@ const experiences: Experience[] = [
       "Prepared assets for use within the game",
     ],
 
-    images: [
-    ],
+    images: [],
   },
 
   {
@@ -337,14 +343,14 @@ const experiences: Experience[] = [
       "As a volunteer with Teaching for Indonesia (TFI) at BINUS University, I taught children fundamental computer skills while introducing them to Canva and basic graphic design concepts. I developed simple and beginner-friendly lessons that turned design concepts into practical activities, then guided students through hands-on exercises and provided individual assistance throughout the learning process.",
 
     responsibilities: [
-    "Taught children basic computer skills and introduced them to Canva and fundamental graphic design concepts.",
-    "Developed simple, beginner-friendly lessons that broke down design tools and concepts into practical activities.",
-    "Guided students through hands-on Canva exercises and provided individual assistance throughout the learning process.",
+      "Taught children basic computer skills and introduced them to Canva and fundamental graphic design concepts.",
+      "Developed simple, beginner-friendly lessons that broke down design tools and concepts into practical activities.",
+      "Guided students through hands-on Canva exercises and provided individual assistance throughout the learning process.",
     ],
 
-    images: [
-    ],
+    images: [],
   },
+
   {
     n: "05",
     date: "currently",
@@ -359,15 +365,14 @@ const experiences: Experience[] = [
       "As a mentor at BINUS University, I supported students who were struggling with various academic materials and concepts. My role involved identifying the areas they found difficult, explaining the material in a simpler and more understandable way, and adapting my approach based on each student's needs. I also guided students through problems and exercises, answered questions, and helped them build a better understanding of the material rather than simply providing the answers.",
 
     responsibilities: [
-     "Helped students understand academic materials and concepts they found difficult.",
-    "Identified individual learning difficulties and adapted explanations accordingly.",
-    "Explained complex topics using simpler and more approachable methods.",
-    "Guided students through exercises, problems, and coursework.",
-    "Answered questions and provided additional clarification when needed.",
+      "Helped students understand academic materials and concepts they found difficult.",
+      "Identified individual learning difficulties and adapted explanations accordingly.",
+      "Explained complex topics using simpler and more approachable methods.",
+      "Guided students through exercises, problems, and coursework.",
+      "Answered questions and provided additional clarification when needed.",
     ],
 
-    images: [
-    ],
+    images: [],
   },
 ];
 
@@ -379,6 +384,35 @@ function App() {
 
   const [selectedExperience, setSelectedExperience] =
     useState<Experience | null>(null);
+
+  // ==========================================================
+  // BACKGROUND MUSIC
+  // ==========================================================
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio(bgm);
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.05;
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((error) => {
+          console.error("Unable to play BGM:", error);
+        });
+    }
+  };
 
   const go = (id: string) => {
     document
@@ -442,8 +476,32 @@ function App() {
         </button>
       </header>
 
-      <main>
+      {/* ======================================================
+          BGM BUTTON
+      ====================================================== */}
 
+      <button
+        className="music-button"
+        onClick={toggleMusic}
+        aria-label={
+          isPlaying
+            ? "Turn music off"
+            : "Turn music on"
+        }
+        title={
+          isPlaying
+            ? "Turn music off"
+            : "Turn music on"
+        }
+      >
+        {isPlaying ? (
+          <Volume2 size={20} />
+        ) : (
+          <VolumeX size={20} />
+        )}
+      </button>
+
+      <main>
         {/* ====================================================
             HERO
         ==================================================== */}
@@ -458,7 +516,8 @@ function App() {
             </div>
 
             <div className="tiny">
-              BINUS UNIVERSITY · COMPUTER SCIENCE, Artificial Intelligence· SEMESTER 05
+              BINUS UNIVERSITY · COMPUTER SCIENCE,
+              Artificial Intelligence · SEMESTER 05
             </div>
 
             <div className="hero-photo">
@@ -469,8 +528,10 @@ function App() {
             </div>
 
             <p>
-              I'M DARREN — A COMPUTER SCIENCE STUDENT MAJORING IN AI
+              I'M DARREN — A COMPUTER SCIENCE STUDENT
+              MAJORING IN AI
             </p>
+
             <p>
               Turning ideas into{" "}
               <b>
@@ -594,7 +655,10 @@ function App() {
               </p>
 
               <p>
-                Through coursework, personal projects, club activities and the S class program, I've had the chance to build things with different teams and technologies.
+                Through coursework, personal projects, club
+                activities and the S class program, I've had
+                the chance to build things with different
+                teams and technologies.
               </p>
 
               <div className="stats">
@@ -941,9 +1005,6 @@ function App() {
             ================================================== */}
 
             <div className="project-links">
-
-              {/* Main GitHub */}
-
               {selectedProject.github?.main && (
                 <a
                   className="github-button"
@@ -960,8 +1021,6 @@ function App() {
                   />
                 </a>
               )}
-
-              {/* Frontend GitHub */}
 
               {selectedProject.github?.frontend && (
                 <a
@@ -981,8 +1040,6 @@ function App() {
                 </a>
               )}
 
-              {/* Backend GitHub */}
-
               {selectedProject.github?.backend && (
                 <a
                   className="github-button"
@@ -1001,8 +1058,6 @@ function App() {
                 </a>
               )}
 
-              {/* Itch.io */}
-
               {selectedProject.itchio && (
                 <a
                   className="github-button"
@@ -1019,15 +1074,13 @@ function App() {
                   />
                 </a>
               )}
-
             </div>
 
             {/* ==================================================
                 PROJECT GALLERY
             ================================================== */}
 
-            {selectedProject.images.length >
-              0 && (
+            {selectedProject.images.length > 0 && (
               <div className="project-gallery">
                 <div className="gallery-title">
                   DEVELOPMENT ARCHIVE
@@ -1052,7 +1105,9 @@ function App() {
 
                         <img
                           src={image}
-                          alt={`${selectedProject.title} development screenshot ${index + 1}`}
+                          alt={`${selectedProject.title} development screenshot ${
+                            index + 1
+                          }`}
                         />
                       </div>
                     )
@@ -1145,8 +1200,7 @@ function App() {
                 EXPERIENCE MEDIA
             ================================================== */}
 
-            {selectedExperience.images
-              .length > 0 && (
+            {selectedExperience.images.length > 0 && (
               <div className="project-gallery">
                 <div className="gallery-title">
                   EXPERIENCE ARCHIVE
@@ -1171,7 +1225,9 @@ function App() {
 
                         <img
                           src={image}
-                          alt={`${selectedExperience.title} ${index + 1}`}
+                          alt={`${selectedExperience.title} ${
+                            index + 1
+                          }`}
                         />
                       </div>
                     )
