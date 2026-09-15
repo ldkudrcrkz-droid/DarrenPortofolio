@@ -389,10 +389,10 @@ function App() {
   // BACKGROUND MUSIC
   // ==========================================================
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+const audioRef = useRef<HTMLAudioElement | null>(null);
+const [isPlaying, setIsPlaying] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
   const audio = new Audio(bgm);
   audio.loop = true;
   audio.volume = 0.25;
@@ -405,7 +405,6 @@ function App() {
         setIsPlaying(true);
       })
       .catch(() => {
-        // Browser blocked autoplay.
         setIsPlaying(false);
       });
 
@@ -413,18 +412,39 @@ function App() {
     document.removeEventListener("keydown", startMusic);
   };
 
+  // Try to start automatically
   startMusic();
 
+  // If autoplay is blocked, start on first interaction
   document.addEventListener("click", startMusic);
   document.addEventListener("keydown", startMusic);
 
   return () => {
     audio.pause();
     audio.src = "";
+
     document.removeEventListener("click", startMusic);
     document.removeEventListener("keydown", startMusic);
   };
 }, []);
+
+const toggleMusic = () => {
+  if (!audioRef.current) return;
+
+  if (isPlaying) {
+    audioRef.current.pause();
+    setIsPlaying(false);
+  } else {
+    audioRef.current
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch((error) => {
+        console.error("Unable to play BGM:", error);
+      });
+  }
+};
 
   const go = (id: string) => {
     document
