@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Anton&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap");
 
+/* =========================================================
+   ROOT
+========================================================= */
+
 :root {
   font-family: "Space Grotesk", sans-serif;
 
@@ -14,20 +18,22 @@
   --mono: "DM Mono", monospace;
 }
 
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-
   scrollbar-width: thin;
   scrollbar-color: #3a3a3a #090909;
 }
 
 body {
   margin: 0;
-
   background: var(--black);
   color: var(--white);
 }
@@ -44,6 +50,366 @@ button {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* =========================================================
+   INTRO ANIMATION
+========================================================= */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  background: var(--black);
+
+  animation: introBackground 0.8s ease-out both;
+}
+
+.intro-screen.intro-leaving {
+  pointer-events: none;
+
+  animation:
+    introExit 0.85s
+    cubic-bezier(0.77, 0, 0.175, 1)
+    forwards;
+}
+
+@keyframes introBackground {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes introExit {
+  0% {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+
+    transform: translateX(0);
+  }
+
+  55% {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      0 100%
+    );
+
+    transform: translateX(-15%);
+  }
+
+  100% {
+    clip-path: polygon(
+      0 0,
+      0 0,
+      0 100%,
+      0 100%
+    );
+
+    transform: translateX(-100%);
+  }
+}
+
+.intro-red-block {
+  position: absolute;
+
+  width: 75vw;
+  height: 150vh;
+
+  right: -20%;
+  top: -20%;
+
+  background: var(--red);
+
+  transform: rotate(-15deg);
+
+  animation:
+    introRed 0.9s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    0.15s both;
+}
+
+@keyframes introRed {
+  from {
+    transform:
+      rotate(-15deg)
+      translateX(100%);
+  }
+
+  to {
+    transform:
+      rotate(-15deg)
+      translateX(0);
+  }
+}
+
+.intro-white-slash {
+  position: absolute;
+
+  height: 8px;
+
+  background: var(--white);
+
+  transform:
+    rotate(-15deg)
+    scaleX(0);
+
+  transform-origin: left;
+
+  animation:
+    introSlash 0.55s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+.intro-white-1 {
+  width: 420px;
+  right: 5%;
+  top: 27%;
+
+  animation-delay: 0.35s;
+}
+
+.intro-white-2 {
+  width: 260px;
+  right: 11%;
+  top: 31%;
+
+  height: 4px;
+
+  animation-delay: 0.48s;
+}
+
+@keyframes introSlash {
+  from {
+    transform:
+      rotate(-15deg)
+      scaleX(0);
+  }
+
+  to {
+    transform:
+      rotate(-15deg)
+      scaleX(1);
+  }
+}
+
+.intro-content {
+  width: min(850px, calc(100% - 48px));
+
+  position: relative;
+  z-index: 5;
+
+  animation:
+    introContent 0.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    0.25s both;
+}
+
+@keyframes introContent {
+  from {
+    opacity: 0;
+
+    transform:
+      translateX(-60px)
+      skewX(-5deg);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateX(0)
+      skewX(0);
+  }
+}
+
+.intro-small {
+  color: var(--red);
+
+  font:
+    500 11px var(--mono);
+
+  letter-spacing: 0.18em;
+
+  margin-bottom: 15px;
+}
+
+.intro-logo {
+  font:
+    900 clamp(56px, 9vw, 130px) / 0.82
+    "Anton";
+
+  letter-spacing: -0.03em;
+
+  transform: skewX(-7deg);
+
+  color: var(--white);
+
+  text-shadow:
+    7px 7px 0 var(--red);
+
+  animation:
+    introGlitch 3s
+    1s infinite;
+}
+
+.intro-logo span {
+  color: var(--white);
+}
+
+@keyframes introGlitch {
+  0%,
+  86%,
+  100% {
+    transform: skewX(-7deg);
+
+    text-shadow:
+      10px 10px 0 var(--red);
+  }
+
+  88% {
+    transform:
+      translateX(5px)
+      skewX(-7deg);
+
+    text-shadow:
+      -5px 0 #33aaff,
+      10px 10px 0 var(--red);
+  }
+
+  90% {
+    transform:
+      translateX(-4px)
+      skewX(-7deg);
+
+    text-shadow:
+      5px 0 #33aaff,
+      10px 10px 0 var(--red);
+  }
+
+  92% {
+    transform: skewX(-7deg);
+  }
+}
+
+.intro-line {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  margin-top: 28px;
+}
+
+.intro-line span {
+  width: 65px;
+  height: 2px;
+
+  background: var(--white);
+}
+
+.intro-line p {
+  margin: 0;
+
+  font:
+    500 11px var(--mono);
+
+  color: var(--white);
+
+  letter-spacing: 0.12em;
+}
+
+.intro-description {
+  max-width: 470px;
+
+  margin: 25px 0 30px;
+
+  color: #999;
+
+  font:
+    10px/1.8 var(--mono);
+
+  letter-spacing: 0.08em;
+}
+
+.intro-enter {
+  display: inline-flex;
+
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px 20px;
+
+  border: 0;
+
+  background: var(--white);
+  color: var(--black);
+
+  font:
+    500 11px var(--mono);
+
+  transition: 0.2s;
+
+  animation:
+    enterPulse 2s
+    1.2s infinite;
+}
+
+.intro-enter:hover {
+  background: var(--red);
+  color: var(--black);
+
+  transform:
+    translate(5px, -5px);
+
+  box-shadow:
+    7px 7px 0 var(--white);
+}
+
+@keyframes enterPulse {
+  0%,
+  100% {
+    box-shadow: none;
+  }
+
+  50% {
+    box-shadow:
+      4px 4px 0 rgba(255, 51, 72, 0.4);
+  }
+}
+
+.intro-footer {
+  width: 100%;
+
+  margin-top: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  color: #555;
+
+  font:
+    9px var(--mono);
+
+  letter-spacing: 0.08em;
 }
 
 /* =========================================================
@@ -89,6 +455,7 @@ a {
 
 .noise {
   position: fixed;
+
   inset: 0;
 
   pointer-events: none;
@@ -103,6 +470,7 @@ a {
 
 .halftone {
   position: fixed;
+
   inset: 0;
 
   pointer-events: none;
@@ -140,7 +508,8 @@ a {
       transparent
     );
 
-  animation: scan 7s linear infinite;
+  animation:
+    scan 7s linear infinite;
 }
 
 @keyframes scan {
@@ -177,7 +546,8 @@ a {
 
   background: #090909e8;
 
-  border-bottom: 2px solid var(--white);
+  border-bottom:
+    2px solid var(--white);
 
   backdrop-filter: blur(12px);
 
@@ -191,7 +561,8 @@ a {
 
   color: var(--white);
 
-  font: 700 22px var(--mono);
+  font:
+    700 22px var(--mono);
 
   letter-spacing: -2px;
 
@@ -203,7 +574,8 @@ a {
 
   font-size: 28px;
 
-  animation: glitch 4.5s infinite;
+  animation:
+    glitch 4.5s infinite;
 }
 
 @keyframes glitch {
@@ -215,7 +587,8 @@ a {
   }
 
   93% {
-    transform: translate(2px, -1px);
+    transform:
+      translate(2px, -1px);
 
     text-shadow:
       -2px 0 #3af,
@@ -223,7 +596,8 @@ a {
   }
 
   95% {
-    transform: translate(-2px, 1px);
+    transform:
+      translate(-2px, 1px);
 
     text-shadow:
       2px 0 #3af,
@@ -251,7 +625,8 @@ a {
 
   color: #aaa;
 
-  font: 500 11px var(--mono);
+  font:
+    500 11px var(--mono);
 
   letter-spacing: 0.08em;
 
@@ -310,7 +685,8 @@ a {
 
   display: grid;
 
-  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-columns:
+    1.15fr 0.85fr;
 
   gap: 50px;
 
@@ -325,7 +701,6 @@ a {
   position: absolute;
 
   right: -15%;
-
   bottom: -28%;
 
   width: 65%;
@@ -414,7 +789,8 @@ a {
 }
 
 .red-label {
-  font: 500 11px var(--mono);
+  font:
+    500 11px var(--mono);
 
   color: var(--red);
 
@@ -426,9 +802,29 @@ a {
 .tiny {
   color: #777;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   letter-spacing: 0.08em;
+}
+
+.hero-title {
+  font:
+    900 clamp(70px, 10vw, 130px) / 0.78
+    "Anton";
+
+  letter-spacing: -0.035em;
+
+  margin: 0;
+
+  transform: skew(-6deg);
+
+  text-shadow:
+    7px 7px 0 var(--red);
+}
+
+.hero-title span {
+  color: var(--white);
 }
 
 /* =========================================================
@@ -452,7 +848,6 @@ a {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   background: #111;
@@ -485,7 +880,8 @@ a {
 
   inset: 0;
 
-  border: 3px solid var(--white);
+  border:
+    3px solid var(--white);
 
   pointer-events: none;
 
@@ -498,10 +894,6 @@ a {
   width: 100%;
   height: 100%;
 
-  /*
-    CONTAIN keeps your entire photo visible.
-    It will no longer zoom/crop your body.
-  */
   object-fit: contain;
 
   object-position: center;
@@ -510,7 +902,8 @@ a {
 
   filter: none;
 
-  border: 3px solid var(--white);
+  border:
+    3px solid var(--white);
 
   box-sizing: border-box;
 
@@ -518,7 +911,8 @@ a {
 }
 
 .hero-photo:hover img {
-  transform: translate(-4px, -4px);
+  transform:
+    translate(-4px, -4px);
 }
 
 /* =========================================================
@@ -530,9 +924,11 @@ a {
 
   color: #c2c0b9;
 
-  font: 12px/1.8 var(--mono);
+  font:
+    12px/1.8 var(--mono);
 
-  border-left: 3px solid var(--red);
+  border-left:
+    3px solid var(--red);
 
   padding-left: 15px;
 }
@@ -543,6 +939,8 @@ a {
 
 .hero-buttons {
   display: flex;
+
+  flex-wrap: wrap;
 
   gap: 12px;
 
@@ -555,7 +953,8 @@ a {
 
   padding: 15px 19px;
 
-  font: 500 11px var(--mono);
+  font:
+    500 11px var(--mono);
 
   display: flex;
 
@@ -577,14 +976,17 @@ a {
 
   color: var(--white);
 
-  border: 1px solid #777;
+  border:
+    1px solid #777;
 }
 
 .red-btn:hover,
 .outline-btn:hover {
-  transform: translate(-3px, -3px);
+  transform:
+    translate(-3px, -3px);
 
-  box-shadow: 5px 5px 0 var(--white);
+  box-shadow:
+    5px 5px 0 var(--white);
 }
 
 /* =========================================================
@@ -594,9 +996,11 @@ a {
 .hero-terminal {
   background: #111;
 
-  border: 3px solid #eee;
+  border:
+    3px solid #eee;
 
-  box-shadow: 12px 12px 0 #000;
+  box-shadow:
+    12px 12px 0 #000;
 
   transform: rotate(4deg);
 
@@ -613,7 +1017,8 @@ a {
   width: 16px;
   height: 16px;
 
-  border: 2px solid var(--red);
+  border:
+    2px solid var(--red);
 
   z-index: 3;
 }
@@ -649,7 +1054,8 @@ a {
 
   align-items: center;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 }
 
 .terminal-body {
@@ -657,7 +1063,8 @@ a {
 }
 
 .terminal-big {
-  font: 65px "Anton";
+  font:
+    65px "Anton";
 
   color: var(--red);
 
@@ -681,11 +1088,13 @@ a {
 
   padding: 12px 0;
 
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom:
+    1px solid #2d2d2d;
 
   color: #999;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 }
 
 .line span {
@@ -701,7 +1110,8 @@ a {
 
   margin-top: 20px;
 
-  animation: blink 1s infinite;
+  animation:
+    blink 1s infinite;
 }
 
 @keyframes blink {
@@ -717,10 +1127,11 @@ a {
 
   bottom: 30px;
 
-  left: max(
-    24px,
-    calc((100vw - 1180px) / 2)
-  );
+  left:
+    max(
+      24px,
+      calc((100vw - 1180px) / 2)
+    );
 
   border: 0;
 
@@ -728,7 +1139,8 @@ a {
 
   color: #aaa;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   transition: 0.2s;
 }
@@ -742,10 +1154,11 @@ a {
 ========================================================= */
 
 .panel {
-  width: min(
-    1180px,
-    calc(100% - 48px)
-  );
+  width:
+    min(
+      1180px,
+      calc(100% - 48px)
+    );
 
   margin: auto;
 
@@ -754,18 +1167,12 @@ a {
   position: relative;
 }
 
-/*
-  Clean straight separator.
-  No jagged triangles.
-*/
-
 .panel::before {
   content: "";
 
   position: absolute;
 
   top: 0;
-
   left: 0;
   right: 0;
 
@@ -789,7 +1196,8 @@ a {
 
   gap: 18px;
 
-  font: 11px var(--mono);
+  font:
+    11px var(--mono);
 
   letter-spacing: 0.08em;
 
@@ -852,15 +1260,15 @@ a {
 .about-grid {
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    1fr 1fr;
 
   gap: 90px;
 }
 
 .about-grid h2 {
   font:
-    900
-    clamp(65px, 9vw, 120px)
+    900 clamp(65px, 9vw, 120px)
     / 0.78
     "Anton";
 
@@ -868,7 +1276,8 @@ a {
 
   transform: skew(-6deg);
 
-  text-shadow: 6px 6px 0 var(--red);
+  text-shadow:
+    6px 6px 0 var(--red);
 }
 
 .about-grid h2 i {
@@ -880,7 +1289,8 @@ a {
 .stamp {
   display: inline-block;
 
-  border: 2px solid var(--red);
+  border:
+    2px solid var(--red);
 
   padding: 11px;
 
@@ -888,7 +1298,8 @@ a {
 
   color: var(--red);
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   transform: rotate(-4deg);
 }
@@ -896,7 +1307,8 @@ a {
 .about-text {
   color: #b1afa9;
 
-  font: 12px/1.9 var(--mono);
+  font:
+    12px/1.9 var(--mono);
 }
 
 .stats {
@@ -904,7 +1316,8 @@ a {
 
   gap: 55px;
 
-  border-top: 1px solid var(--line);
+  border-top:
+    1px solid var(--line);
 
   margin-top: 35px;
 
@@ -916,13 +1329,15 @@ a {
 
   color: #fff;
 
-  font: 32px "Anton";
+  font:
+    32px "Anton";
 }
 
 .stats small {
   color: #777;
 
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
 }
 
 /* =========================================================
@@ -935,13 +1350,15 @@ a {
   grid-template-columns:
     repeat(4, 1fr);
 
-  border-left: 1px solid var(--line);
+  border-left:
+    1px solid var(--line);
 }
 
 .skill {
   min-height: 200px;
 
-  border: 1px solid var(--line);
+  border:
+    1px solid var(--line);
 
   border-left: 0;
 
@@ -957,7 +1374,8 @@ a {
 .skill:hover {
   background: #111;
 
-  transform: translateY(-5px);
+  transform:
+    translateY(-5px);
 
   border-color: #555;
 }
@@ -979,21 +1397,32 @@ a {
 }
 
 .skill > span {
+  display: block;
+
   color: var(--red);
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
+}
+
+.skill svg {
+  margin-top: 25px;
+
+  color: var(--red);
 }
 
 .skill h3 {
-  font: 26px "Anton";
+  font:
+    26px "Anton";
 
-  margin: 30px 0 15px;
+  margin: 15px 0;
 }
 
 .skill p {
   color: #777;
 
-  font: 10px/1.7 var(--mono);
+  font:
+    10px/1.7 var(--mono);
 }
 
 /* =========================================================
@@ -1001,7 +1430,8 @@ a {
 ========================================================= */
 
 .work-list {
-  border-top: 2px solid #eee;
+  border-top:
+    2px solid #eee;
 }
 
 .work {
@@ -1019,7 +1449,8 @@ a {
 
   padding: 30px 16px;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid var(--line);
 
   transition: 0.18s;
 
@@ -1036,6 +1467,7 @@ a {
   position: absolute;
 
   left: 0;
+
   top: 0;
   bottom: 0;
 
@@ -1043,7 +1475,8 @@ a {
 
   background: var(--red);
 
-  transform: translateX(-6px);
+  transform:
+    translateX(-6px);
 
   transition: 0.18s;
 }
@@ -1055,15 +1488,18 @@ a {
     skewX(-1deg)
     translateX(4px);
 
-  border-bottom-color: var(--red);
+  border-bottom-color:
+    var(--red);
 }
 
 .work:hover::before {
-  transform: translateX(0);
+  transform:
+    translateX(0);
 }
 
 .work-num {
-  font: 11px var(--mono);
+  font:
+    11px var(--mono);
 
   color: #777;
 
@@ -1082,11 +1518,13 @@ a {
 
   place-items: center;
 
-  border: 2px solid #555;
+  border:
+    2px solid #555;
 
   color: var(--red);
 
-  transform: rotate(-5deg);
+  transform:
+    rotate(-5deg);
 
   transition: 0.18s;
 }
@@ -1104,13 +1542,118 @@ a {
 .category {
   color: var(--red);
 
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
 
   letter-spacing: 0.1em;
 }
 
+.project-meta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 8px;
+}
+
+.category {
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  color: #ff334f;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 4px 8px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.25);
+
+  font-size: 9px;
+
+  letter-spacing: 1.5px;
+
+  font-weight: 700;
+
+  color: #fff;
+}
+
+.status::before {
+  content: "";
+
+  width: 6px;
+  height: 6px;
+
+  margin-right: 6px;
+
+  border-radius: 50%;
+
+  background: #fff;
+}
+
+.status-completed {
+  color: #06f04c;
+}
+
+.status-completed::before {
+  background: #06f04c;
+}
+
+.status-in-development {
+  color: #ff334f;
+
+  border-color: #ff334f;
+}
+
+.status-in-development::before {
+  background: #ff334f;
+}
+
+.status-research {
+  color: #f5c542;
+
+  border-color: #f5c542;
+}
+
+.status-research::before {
+  background: #f5c542;
+}
+
+.status-ongoing {
+  color: #ff334f;
+
+  border-color: #ff334f;
+}
+
+.status-ongoing::before {
+  background: #ff334f;
+}
+
+.status-on-hold {
+  opacity: 0.65;
+}
+
+.status-planning {
+  color: #fff;
+}
+
 .work h3 {
-  font: 32px "Anton";
+  font:
+    32px "Anton";
 
   margin: 5px 0;
 
@@ -1122,15 +1665,18 @@ a {
 
   color: #999;
 
-  font: 11px/1.7 var(--mono);
+  font:
+    11px/1.7 var(--mono);
 
-  margin: 0 0 13px;
+  margin:
+    0 0 13px;
 }
 
 .pill {
   display: inline-block;
 
-  border: 1px solid #444;
+  border:
+    1px solid #444;
 
   color: #bbb;
 
@@ -1138,7 +1684,8 @@ a {
 
   margin-right: 5px;
 
-  font: 8px var(--mono);
+  font:
+    8px var(--mono);
 
   transition: 0.18s;
 }
@@ -1162,84 +1709,13 @@ a {
     translate(3px, -3px);
 }
 
-/* PROJECT META */
-.project-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.category {
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: #ff334f;
-  font-weight: 700;
-}
-
-/* STATUS */
-.status {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  border: 1px solid rgba(255,255,255,0.25);
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-/* Small indicator */
-.status::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background: #ffffff;
-}
-
-/* Completed */
-.status-completed {
-  color: #06f04c;
-}
-
-/* In development */
-.status-in-development {
-  color: #ff334f;
-  border-color: #ff334f;
-}
-
-.status-in-development::before {
-  background: #ff334f;
-}
-
-/* Ongoing */
-.status-ongoing {
-  color: #ff334f;
-  border-color: #ff334f;
-}
-
-.status-ongoing::before {
-  background: #ff334f;
-}
-
-/* On hold */
-.status-on-hold {
-  opacity: 0.65;
-}
-
-/* Planning */
-.status-planning {
-  color: #ffffff;
-}
-
 /* =========================================================
    EXPERIENCE
 ========================================================= */
 
 .memory-list {
-  border-top: 2px solid #eee;
+  border-top:
+    2px solid #eee;
 }
 
 .memory {
@@ -1254,7 +1730,8 @@ a {
 
   padding: 38px 0;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid var(--line);
 
   cursor: pointer;
 
@@ -1268,23 +1745,27 @@ a {
 
   padding-left: 15px;
 
-  border-bottom-color: var(--red);
+  border-bottom-color:
+    var(--red);
 }
 
 .mem-date {
   color: var(--red);
 
-  font: 11px var(--mono);
+  font:
+    11px var(--mono);
 }
 
 .memory small {
   color: #777;
 
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
 }
 
 .memory h3 {
-  font: 32px "Anton";
+  font:
+    32px "Anton";
 
   margin: 8px 0;
 }
@@ -1294,7 +1775,8 @@ a {
 
   color: #999;
 
-  font: 11px/1.7 var(--mono);
+  font:
+    11px/1.7 var(--mono);
 
   margin: 0;
 }
@@ -1323,9 +1805,11 @@ a {
 
   z-index: 200;
 
-  background: rgba(0, 0, 0, 0.82);
+  background:
+    rgba(0, 0, 0, 0.82);
 
-  backdrop-filter: blur(8px);
+  backdrop-filter:
+    blur(8px);
 
   display: flex;
 
@@ -1336,7 +1820,8 @@ a {
 
   overflow-y: auto;
 
-  animation: overlayIn 0.2s ease;
+  animation:
+    overlayIn 0.2s ease;
 }
 
 @keyframes overlayIn {
@@ -1350,7 +1835,8 @@ a {
 }
 
 .detail-modal {
-  width: min(900px, 100%);
+  width:
+    min(900px, 100%);
 
   max-height: 90vh;
 
@@ -1365,7 +1851,8 @@ a {
       #101010 35%
     );
 
-  border: 2px solid var(--white);
+  border:
+    2px solid var(--white);
 
   box-shadow:
     12px 12px 0 var(--red),
@@ -1373,7 +1860,8 @@ a {
 
   padding: 50px;
 
-  animation: modalIn 0.3s
+  animation:
+    modalIn 0.3s
     cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 
@@ -1422,7 +1910,8 @@ a {
 
   place-items: center;
 
-  border: 1px solid #555;
+  border:
+    1px solid #555;
 
   background: var(--black);
 
@@ -1444,7 +1933,8 @@ a {
 .detail-number {
   color: #777;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   letter-spacing: 0.12em;
 
@@ -1453,18 +1943,19 @@ a {
 
 .detail-modal h2 {
   font:
-    900
-    clamp(55px, 8vw, 100px)
+    900 clamp(55px, 8vw, 100px)
     / 0.85
     "Anton";
 
   letter-spacing: 0.01em;
 
-  margin: 12px 0 20px;
+  margin:
+    12px 0 20px;
 
   color: var(--white);
 
-  transform: skew(-5deg);
+  transform:
+    skew(-5deg);
 
   text-shadow:
     6px 6px 0 var(--red);
@@ -1475,13 +1966,15 @@ a {
 
   padding: 8px 10px;
 
-  border-left: 3px solid var(--red);
+  border-left:
+    3px solid var(--red);
 
   background: #171717;
 
   color: #ddd;
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   letter-spacing: 0.05em;
 
@@ -1493,7 +1986,8 @@ a {
 
   color: #aaa;
 
-  font: 12px/1.9 var(--mono);
+  font:
+    12px/1.9 var(--mono);
 
   margin-bottom: 25px;
 }
@@ -1510,6 +2004,14 @@ a {
   margin-bottom: 5px;
 }
 
+.detail-links {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
 .github-button {
   display: inline-flex;
 
@@ -1523,7 +2025,8 @@ a {
 
   color: var(--black);
 
-  font: 500 10px var(--mono);
+  font:
+    500 10px var(--mono);
 
   transition: 0.2s;
 }
@@ -1547,13 +2050,15 @@ a {
 
   padding-top: 30px;
 
-  border-top: 1px solid var(--line);
+  border-top:
+    1px solid var(--line);
 }
 
 .gallery-title {
   color: var(--red);
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 
   letter-spacing: 0.14em;
 
@@ -1574,7 +2079,8 @@ a {
 
   background: #090909;
 
-  border: 1px solid #444;
+  border:
+    1px solid #444;
 
   padding: 8px;
 
@@ -1607,7 +2113,8 @@ a {
 
   color: #777;
 
-  font: 8px var(--mono);
+  font:
+    8px var(--mono);
 }
 
 /* =========================================================
@@ -1623,13 +2130,15 @@ a {
 
   flex-direction: column;
 
-  border-top: 1px solid var(--line);
+  border-top:
+    1px solid var(--line);
 }
 
 .responsibility {
   display: grid;
 
-  grid-template-columns: 45px 1fr;
+  grid-template-columns:
+    45px 1fr;
 
   gap: 15px;
 
@@ -1637,13 +2146,15 @@ a {
 
   padding: 15px 0;
 
-  border-bottom: 1px solid var(--line);
+  border-bottom:
+    1px solid var(--line);
 }
 
 .responsibility span {
   color: var(--red);
 
-  font: 10px var(--mono);
+  font:
+    10px var(--mono);
 }
 
 .responsibility p {
@@ -1651,7 +2162,8 @@ a {
 
   color: #aaa;
 
-  font: 11px/1.6 var(--mono);
+  font:
+    11px/1.6 var(--mono);
 }
 
 /* =========================================================
@@ -1687,7 +2199,8 @@ a {
 
   background: var(--black);
 
-  transform: rotate(13deg);
+  transform:
+    rotate(13deg);
 }
 
 .contact-inner {
@@ -1704,20 +2217,22 @@ a {
 
 .contact h2 {
   font:
-    900
-    clamp(72px, 10vw, 145px)
+    900 clamp(72px, 10vw, 145px)
     / 0.8
     "Anton";
 
   letter-spacing: -0.035em;
 
-  margin: 25px 0 35px;
+  margin:
+    25px 0 35px;
 
-  transform: skew(-7deg);
+  transform:
+    skew(-7deg);
 
   color: var(--black);
 
-  text-shadow: 7px 7px 0 #fff;
+  text-shadow:
+    7px 7px 0 #fff;
 }
 
 .contact h2 i {
@@ -1732,7 +2247,8 @@ a {
 .contact p {
   color: var(--black);
 
-  font: 11px/1.7 var(--mono);
+  font:
+    11px/1.7 var(--mono);
 
   max-width: 500px;
 }
@@ -1746,13 +2262,15 @@ a {
 
   margin-top: 20px;
 
-  border-bottom: 2px solid var(--black);
+  border-bottom:
+    2px solid var(--black);
 
   padding-bottom: 8px;
 
   color: var(--black);
 
-  font: 13px var(--mono);
+  font:
+    13px var(--mono);
 
   transition: 0.2s;
 }
@@ -1780,11 +2298,13 @@ a {
 
   padding: 10px;
 
-  border: 1px solid var(--black);
+  border:
+    1px solid var(--black);
 
   color: var(--black);
 
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
 
   transition: 0.2s;
 }
@@ -1811,13 +2331,16 @@ a {
 
   color: #fff;
 
-  border: 4px solid #fff;
+  border:
+    4px solid #fff;
 
   padding: 28px;
 
-  font: 42px "Anton";
+  font:
+    42px "Anton";
 
-  transform: rotate(-8deg);
+  transform:
+    rotate(-8deg);
 
   box-shadow:
     14px 14px 0 #fff;
@@ -1832,7 +2355,8 @@ a {
 }
 
 .calling-card span {
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
 
   color: var(--red);
 }
@@ -1848,13 +2372,80 @@ footer {
 
   color: #777;
 
-  border-top: 2px solid #333;
+  border-top:
+    2px solid #333;
 
   display: flex;
 
   justify-content: space-between;
 
-  font: 9px var(--mono);
+  font:
+    9px var(--mono);
+}
+
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-button {
+  position: fixed;
+
+  right: 24px;
+  bottom: 24px;
+
+  min-width: 48px;
+  height: 48px;
+
+  padding: 0 12px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  background: #000;
+
+  color: #fff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.35);
+
+  cursor: pointer;
+
+  z-index: 9999;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.music-button:hover {
+  transform: scale(1.08);
+
+  background: #111;
+
+  border-color: #fff;
+}
+
+.music-button:active {
+  transform: scale(0.95);
+}
+
+.music-button span {
+  font:
+    8px var(--mono);
+
+  letter-spacing: 0.05em;
+}
+
+.music-playing {
+  border-color: var(--red);
+
+  color: var(--red);
 }
 
 /* =========================================================
@@ -1862,6 +2453,7 @@ footer {
 ========================================================= */
 
 @media (max-width: 800px) {
+
   .topbar {
     padding: 0 20px;
   }
@@ -1888,7 +2480,8 @@ footer {
 
     align-items: stretch;
 
-    border-bottom: 2px solid var(--red);
+    border-bottom:
+      2px solid var(--red);
   }
 
   .nav.open {
@@ -1916,13 +2509,16 @@ footer {
   }
 
   .hero-terminal {
-    margin: 65px auto 0;
+    margin:
+      65px auto 0;
 
-    transform: rotate(2deg);
+    transform:
+      rotate(2deg);
   }
 
   .hero-photo {
-    width: min(430px, 100%);
+    width:
+      min(430px, 100%);
 
     height: 500px;
 
@@ -1971,7 +2567,8 @@ footer {
   }
 
   .memory .mem-date {
-    grid-column: 1 / -1;
+    grid-column:
+      1 / -1;
   }
 
   .calling-card {
@@ -1987,11 +2584,19 @@ footer {
   }
 
   .panel {
-    width: calc(100% - 32px);
+    width:
+      calc(100% - 32px);
   }
 
   .detail-modal {
-    padding: 40px 30px;
+    padding:
+      40px 30px;
+  }
+
+  .intro-red-block {
+    width: 120vw;
+
+    right: -60%;
   }
 }
 
@@ -2000,6 +2605,7 @@ footer {
 ========================================================= */
 
 @media (max-width: 480px) {
+
   .topbar {
     height: 64px;
   }
@@ -2022,7 +2628,7 @@ footer {
     min-height: 1050px;
   }
 
-  .hero h1 {
+  .hero-title {
     font-size: 76px;
   }
 
@@ -2121,7 +2727,8 @@ footer {
   .detail-modal {
     max-height: 94vh;
 
-    padding: 35px 20px;
+    padding:
+      35px 20px;
 
     box-shadow:
       6px 6px 0 var(--red),
@@ -2146,41 +2753,56 @@ footer {
 
     gap: 8px;
   }
+
+  .music-button {
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .music-button span {
+    display: none;
+  }
+
+  .intro-content {
+    width:
+      calc(100% - 36px);
+  }
+
+  .intro-logo {
+    font-size: 62px;
+  }
+
+  .intro-small {
+    font-size: 9px;
+  }
+
+  .intro-description {
+    font-size: 8px;
+  }
+
+  .intro-footer {
+    font-size: 7px;
+  }
+
+  .intro-line {
+    margin-top: 22px;
+  }
 }
 
-.music-button {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
-  width: 48px;
-  height: 48px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    animation-iteration-count: 1 !important;
 
-  background: #000;
-  color: #fff;
+    scroll-behavior: auto !important;
 
-  border: 1px solid rgba(255, 255, 255, 0.35);
-
-  cursor: pointer;
-
-  z-index: 9999;
-
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.music-button:hover {
-  transform: scale(1.08);
-  background: #111;
-  border-color: #fff;
-}
-
-.music-button:active {
-  transform: scale(0.95);
+    transition-duration: 0.01ms !important;
+  }
 }
