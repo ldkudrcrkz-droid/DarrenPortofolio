@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 
 import profilePhoto from "./photo/darren.jpeg";
-import bgm from "./assets/BGM.mp3";
 
 // ============================================================
 // PROJECT IMAGES
@@ -109,7 +108,11 @@ const projects: Project[] = [
       "REST API",
     ],
 
-    images: [taskweaver1, taskweaver2, taskweaver4],
+    images: [
+      taskweaver1,
+      taskweaver2,
+      taskweaver4,
+    ],
 
     links: [
       {
@@ -145,7 +148,12 @@ const projects: Project[] = [
       "Machine Learning",
     ],
 
-    images: [calorIQ1, calorIQ2, calorIQ3, calorIQ4],
+    images: [
+      calorIQ1,
+      calorIQ2,
+      calorIQ3,
+      calorIQ4,
+    ],
 
     links: [
       {
@@ -177,7 +185,10 @@ const projects: Project[] = [
       "REST API",
     ],
 
-    images: [sonata1, sonata2],
+    images: [
+      sonata1,
+      sonata2,
+    ],
 
     links: [
       {
@@ -249,7 +260,12 @@ const projects: Project[] = [
       "Machine Learning",
     ],
 
-    images: [measles1, measles2, measles3, measles4],
+    images: [
+      measles1,
+      measles2,
+      measles3,
+      measles4,
+    ],
   },
 
   {
@@ -273,7 +289,10 @@ const projects: Project[] = [
       "Speech Recognition",
     ],
 
-    images: [speech1, speech2],
+    images: [
+      speech1,
+      speech2,
+    ],
 
     links: [
       {
@@ -379,9 +398,6 @@ const experiences: Experience[] = [
 // ============================================================
 
 function App() {
-  const [introVisible, setIntroVisible] = useState(true);
-  const [introLeaving, setIntroLeaving] = useState(false);
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [selectedProject, setSelectedProject] =
@@ -398,42 +414,6 @@ function App() {
   // AUDIO
   // ==========================================================
 
-  useEffect(() => {
-    const audio = new Audio(bgm);
-
-    audio.loop = true;
-    audio.volume = 0.25;
-    audio.preload = "auto";
-
-    audioRef.current = audio;
-
-    return () => {
-      audio.pause();
-      audio.src = "";
-      audioRef.current = null;
-    };
-  }, []);
-
-  // ==========================================================
-  // START PORTFOLIO
-  // ==========================================================
-
-  const startExperience = async () => {
-    if (audioRef.current) {
-      try {
-        await audioRef.current.play();
-        setIsPlaying(true);
-      } catch {
-        setIsPlaying(false);
-      }
-    }
-
-    setIntroLeaving(true);
-
-    window.setTimeout(() => {
-      setIntroVisible(false);
-    }, 850);
-  };
 
   // ==========================================================
   // MUSIC TOGGLE
@@ -479,10 +459,11 @@ function App() {
   useEffect(() => {
     const locked =
       selectedProject !== null ||
-      selectedExperience !== null ||
-      introVisible;
+      selectedExperience !== null;
 
-    document.body.style.overflow = locked ? "hidden" : "";
+    document.body.style.overflow = locked
+      ? "hidden"
+      : "";
 
     return () => {
       document.body.style.overflow = "";
@@ -490,7 +471,6 @@ function App() {
   }, [
     selectedProject,
     selectedExperience,
-    introVisible,
   ]);
 
   // ==========================================================
@@ -509,60 +489,6 @@ function App() {
 
   return (
     <div className="app">
-
-      {/* ======================================================
-          INTRO ANIMATION
-      ====================================================== */}
-
-      {introVisible && (
-        <div
-          className={`intro-screen ${
-            introLeaving ? "intro-leaving" : ""
-          }`}
-        >
-          <div className="intro-red-block" />
-
-          <div className="intro-white-slash intro-white-1" />
-          <div className="intro-white-slash intro-white-2" />
-
-          <div className="intro-content">
-
-            <div className="intro-small">
-              PORTFOLIO // SYSTEM INITIALIZATION
-            </div>
-
-            <div className="intro-logo">
-              LIE DARREN
-              <br />
-              <span>KEEFE UTOMO</span>
-            </div>
-
-            <div className="intro-line">
-              <span />
-              <p>SYSTEM ONLINE</p>
-              <span />
-            </div>
-
-            <p className="intro-description">
-              COMPUTER SCIENCE // DEVELOPMENT //
-              CREATIVE TECHNOLOGY
-            </p>
-
-            <button
-              className="intro-enter"
-              onClick={startExperience}
-            >
-              <span>ENTER</span>
-              <ArrowUpRight size={18} />
-            </button>
-
-            <div className="intro-footer">
-              <span>BUILD 2026.09</span>
-            </div>
-
-          </div>
-        </div>
-      )}
 
       {/* ======================================================
           BACKGROUND FX
@@ -585,21 +511,33 @@ function App() {
           Lie <span>Darren</span> Keefe Utomo
         </button>
 
-        <nav className={`nav ${menuOpen ? "open" : ""}`}>
+        <nav
+          className={`nav ${
+            menuOpen ? "open" : ""
+          }`}
+        >
 
-          <button onClick={() => scrollTo("about")}>
+          <button
+            onClick={() => scrollTo("about")}
+          >
             01 // ABOUT
           </button>
 
-          <button onClick={() => scrollTo("skills")}>
+          <button
+            onClick={() => scrollTo("skills")}
+          >
             02 // SKILLS
           </button>
 
-          <button onClick={() => scrollTo("projects")}>
+          <button
+            onClick={() => scrollTo("projects")}
+          >
             03 // PROJECTS
           </button>
 
-          <button onClick={() => scrollTo("experience")}>
+          <button
+            onClick={() => scrollTo("experience")}
+          >
             04 // EXPERIENCE
           </button>
 
@@ -615,44 +553,20 @@ function App() {
 
         <button
           className="mobile"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() =>
+            setMenuOpen(!menuOpen)
+          }
           aria-label="Toggle navigation"
         >
-          {menuOpen ? <X /> : <Menu />}
+          {menuOpen ? (
+            <X />
+          ) : (
+            <Menu />
+          )}
         </button>
 
       </header>
 
-      {/* ======================================================
-          MUSIC BUTTON
-      ====================================================== */}
-
-      <button
-        className={`music-button ${
-          isPlaying ? "music-playing" : ""
-        }`}
-        onClick={toggleMusic}
-        aria-label={
-          isPlaying
-            ? "Turn music off"
-            : "Turn music on"
-        }
-        title={
-          isPlaying
-            ? "Turn music off"
-            : "Turn music on"
-        }
-      >
-        {isPlaying ? (
-          <Volume2 size={19} />
-        ) : (
-          <VolumeX size={19} />
-        )}
-
-        <span>
-          {isPlaying ? "BGM ON" : "BGM OFF"}
-        </span>
-      </button>
 
       {/* ======================================================
           HERO
@@ -675,21 +589,28 @@ function App() {
           <h1 className="hero-title">
             LIE DARREN
             <br />
-            <span>KEEFE UTOMO</span>
+            <span>
+              KEEFE UTOMO
+            </span>
           </h1>
 
           <p>
             Computer Science student focused on{" "}
-            <b>software development</b>, AI,
-            frontend engineering, backend systems,
-            and creative technology.
+            <b>
+              software development
+            </b>
+            , AI, frontend engineering,
+            backend systems, and creative
+            technology.
           </p>
 
           <div className="hero-buttons">
 
             <button
               className="red-btn"
-              onClick={() => scrollTo("projects")}
+              onClick={() =>
+                scrollTo("projects")
+              }
             >
               VIEW PROJECTS
               <ArrowUpRight size={16} />
@@ -697,7 +618,9 @@ function App() {
 
             <button
               className="outline-btn"
-              onClick={() => scrollTo("about")}
+              onClick={() =>
+                scrollTo("about")
+              }
             >
               ABOUT ME
               <ArrowDown size={16} />
@@ -715,10 +638,12 @@ function App() {
           </div>
 
           <div className="hero-photo">
+
             <img
               src={profilePhoto}
               alt="Darren"
             />
+
           </div>
 
         </div>
@@ -733,8 +658,15 @@ function App() {
           <div className="corner br" />
 
           <div className="terminal-head">
-            <span>TERMINAL // DARC.EXE</span>
-            <span>● ● ●</span>
+
+            <span>
+              TERMINAL // DARREN.EXE
+            </span>
+
+            <span>
+              ● ● ●
+            </span>
+
           </div>
 
           <div className="terminal-body">
@@ -746,23 +678,51 @@ function App() {
             <div className="terminal-rule" />
 
             <div className="line">
-              <span>STATUS</span>
-              <b>ACTIVE</b>
+
+              <span>
+                STATUS
+              </span>
+
+              <b>
+                ACTIVE
+              </b>
+
             </div>
 
             <div className="line">
-              <span>ROLE</span>
-              <span>CS STUDENT</span>
+
+              <span>
+                ROLE
+              </span>
+
+              <span>
+                CS STUDENT
+              </span>
+
             </div>
 
             <div className="line">
-              <span>FOCUS</span>
-              <span>SOFTWARE / AI</span>
+
+              <span>
+                FOCUS
+              </span>
+
+              <span>
+                SOFTWARE / AI
+              </span>
+
             </div>
 
             <div className="line">
-              <span>STACK</span>
-              <span>TS / C# / PYTHON</span>
+
+              <span>
+                STACK
+              </span>
+
+              <span>
+                TS / C# / PYTHON
+              </span>
+
             </div>
 
             <div className="cursor">
@@ -775,7 +735,9 @@ function App() {
 
         <button
           className="down"
-          onClick={() => scrollTo("about")}
+          onClick={() =>
+            scrollTo("about")
+          }
         >
           SCROLL TO EXPLORE ↓
         </button>
@@ -792,9 +754,19 @@ function App() {
       >
 
         <div className="section-top">
-          <span>01</span>
-          <b>ABOUT</b>
-          <em>IDENTITY FILE</em>
+
+          <span>
+            01
+          </span>
+
+          <b>
+            ABOUT
+          </b>
+
+          <em>
+            IDENTITY FILE
+          </em>
+
         </div>
 
         <div className="about-grid">
@@ -804,13 +776,17 @@ function App() {
             <h2>
               WHO
               <br />
-              <i>AM I?</i>
+              <i>
+                AM I?
+              </i>
             </h2>
 
             <div className="stamp">
+
               COMPUTER SCIENCE
               <br />
               BINUS UNIVERSITY
+
             </div>
 
           </div>
@@ -818,34 +794,59 @@ function App() {
           <div>
 
             <p className="about-text">
-              I am a Computer Science undergraduate
-              student with an interest in building
-              software that combines functionality,
-              technology, and creative design.
+              I am a Computer Science
+              undergraduate student
+              with an interest in building
+              software that combines
+              functionality, technology,
+              and creative design.
             </p>
 
             <p className="about-text">
-              My experience ranges from frontend and
-              backend development to machine learning,
-              computer vision, audio processing, and
-              game development.
+              My experience ranges from
+              frontend and backend
+              development to machine
+              learning, computer vision,
+              audio processing, and game
+              development.
             </p>
 
             <div className="stats">
 
               <div>
-                <strong>2024</strong>
-                <small>STARTED CS</small>
+
+                <strong>
+                  2024
+                </strong>
+
+                <small>
+                  STARTED CS
+                </small>
+
               </div>
 
               <div>
-                <strong>06+</strong>
-                <small>PROJECTS</small>
+
+                <strong>
+                  06+
+                </strong>
+
+                <small>
+                  PROJECTS
+                </small>
+
               </div>
 
               <div>
-                <strong>04</strong>
-                <small>CORE AREAS</small>
+
+                <strong>
+                  04
+                </strong>
+
+                <small>
+                  CORE AREAS
+                </small>
+
               </div>
 
             </div>
@@ -866,59 +867,100 @@ function App() {
       >
 
         <div className="section-top">
-          <span>02</span>
-          <b>SKILL TREE</b>
-          <em>TECHNICAL LOADOUT</em>
+
+          <span>
+            02
+          </span>
+
+          <b>
+            SKILL TREE
+          </b>
+
+          <em>
+            TECHNICAL LOADOUT
+          </em>
+
         </div>
 
         <div className="skill-grid">
 
           <div className="skill">
-            <span>01</span>
+
+            <span>
+              01
+            </span>
+
             <Code2 size={25} />
 
-            <h3>FRONTEND</h3>
+            <h3>
+              FRONTEND
+            </h3>
 
             <p>
-              React, TypeScript, JavaScript,
-              responsive UI, component architecture.
+              React, TypeScript,
+              JavaScript, responsive UI,
+              component architecture.
             </p>
+
           </div>
 
           <div className="skill">
-            <span>02</span>
+
+            <span>
+              02
+            </span>
+
             <Server size={25} />
 
-            <h3>BACKEND</h3>
+            <h3>
+              BACKEND
+            </h3>
 
             <p>
-              C#, .NET, APIs, backend architecture,
-              database integration.
+              C#, .NET, APIs, backend
+              architecture, database
+              integration.
             </p>
+
           </div>
 
           <div className="skill">
-            <span>03</span>
+
+            <span>
+              03
+            </span>
+
             <Brain size={25} />
 
-            <h3>AI / ML</h3>
+            <h3>
+              AI / ML
+            </h3>
 
             <p>
-              Machine learning, NLP, forecasting,
-              deep learning, evaluation.
+              Machine learning, NLP,
+              forecasting, deep learning,
+              evaluation.
             </p>
+
           </div>
 
           <div className="skill">
-            <span>04</span>
+
+            <span>
+              04
+            </span>
+
             <Gamepad2 size={25} />
 
-            <h3>CREATIVE</h3>
+            <h3>
+              CREATIVE
+            </h3>
 
             <p>
               Blender, Unity, 3D modeling,
               game development and design.
             </p>
+
           </div>
 
         </div>
@@ -935,9 +977,19 @@ function App() {
       >
 
         <div className="section-top">
-          <span>03</span>
-          <b>PROJECTS</b>
-          <em>SELECT A FILE</em>
+
+          <span>
+            03
+          </span>
+
+          <b>
+            PROJECTS
+          </b>
+
+          <em>
+            SELECT A FILE
+          </em>
+
         </div>
 
         <div className="work-list">
@@ -958,15 +1010,31 @@ function App() {
 
               <div className="work-icon">
 
-                {project.category.includes("GAME") ? (
+                {project.category.includes(
+                  "GAME"
+                ) ? (
+
                   <Gamepad2 size={22} />
-                ) : project.category.includes("MACHINE") ||
-                  project.category.includes("DEEP") ? (
+
+                ) : project.category.includes(
+                    "MACHINE"
+                  ) ||
+                  project.category.includes(
+                    "DEEP"
+                  ) ? (
+
                   <Brain size={22} />
-                ) : project.category.includes("MUSIC") ? (
+
+                ) : project.category.includes(
+                    "MUSIC"
+                  ) ? (
+
                   <Globe size={22} />
+
                 ) : (
+
                   <Layers size={22} />
+
                 )}
 
               </div>
@@ -982,7 +1050,10 @@ function App() {
                   <div
                     className={`status status-${project.status
                       .toLowerCase()
-                      .replace(/ /g, "-")}`}
+                      .replace(
+                        / /g,
+                        "-"
+                      )}`}
                   >
                     {project.status}
                   </div>
@@ -1002,12 +1073,14 @@ function App() {
                   {project.technologies
                     .slice(0, 4)
                     .map((tech) => (
+
                       <span
                         className="pill"
                         key={tech}
                       >
                         {tech}
                       </span>
+
                     ))}
 
                 </div>
@@ -1037,51 +1110,65 @@ function App() {
       >
 
         <div className="section-top">
-          <span>04</span>
-          <b>EXPERIENCE</b>
-          <em>MEMORY LOG</em>
+
+          <span>
+            04
+          </span>
+
+          <b>
+            EXPERIENCE
+          </b>
+
+          <em>
+            MEMORY LOG
+          </em>
+
         </div>
 
         <div className="memory-list">
 
-          {experiences.map((experience) => (
+          {experiences.map(
+            (experience) => (
 
-            <article
-              className="memory"
-              key={experience.n}
-              onClick={() =>
-                setSelectedExperience(experience)
-              }
-            >
+              <article
+                className="memory"
+                key={experience.n}
+                onClick={() =>
+                  setSelectedExperience(
+                    experience
+                  )
+                }
+              >
 
-              <div className="mem-date">
-                {experience.date}
-              </div>
+                <div className="mem-date">
+                  {experience.date}
+                </div>
 
-              <div>
+                <div>
 
-                <small>
-                  {experience.organization}
-                </small>
+                  <small>
+                    {experience.organization}
+                  </small>
 
-                <h3>
-                  {experience.title}
-                </h3>
+                  <h3>
+                    {experience.title}
+                  </h3>
 
-                <p>
-                  {experience.description}
-                </p>
+                  <p>
+                    {experience.description}
+                  </p>
 
-              </div>
+                </div>
 
-              <ArrowUpRight
-                className="memory-arrow"
-                size={20}
-              />
+                <ArrowUpRight
+                  className="memory-arrow"
+                  size={20}
+                />
 
-            </article>
+              </article>
 
-          ))}
+            )
+          )}
 
         </div>
 
@@ -1105,21 +1192,27 @@ function App() {
           <h2>
             LET'S
             <br />
-            <i>CONNECT.</i>
+            <i>
+              CONNECT.
+            </i>
           </h2>
 
           <p>
-            Have a project, collaboration, or
-            opportunity? Send me a message and
-            let's build something.
+            Have a project, collaboration,
+            or opportunity? Send me a
+            message and let's build
+            something.
           </p>
 
           <a
             className="mail"
             href="mailto:ldkudrcrkz@gmail.com"
           >
+
             <Mail size={17} />
+
             ldkudrcrkz@gmail.com
+
           </a>
 
           <div className="socials">
@@ -1129,8 +1222,11 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
+
               <Github size={15} />
+
               GITHUB
+
             </a>
 
             <a
@@ -1138,8 +1234,11 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
+
               <Linkedin size={15} />
+
               LINKEDIN
+
             </a>
 
           </div>
@@ -1147,11 +1246,15 @@ function App() {
         </div>
 
         <div className="calling-card">
-          DARC
+
+          DARREN
+
           <br />
+
           <span>
             COMPUTER SCIENCE // 2026
           </span>
+
         </div>
 
       </section>
@@ -1163,7 +1266,7 @@ function App() {
       <footer>
 
         <span>
-          © 2026 DARC // ALL SYSTEMS NOMINAL
+          © 2026 DARREN// ALL SYSTEMS NOMINAL
         </span>
 
         <span>
@@ -1203,7 +1306,8 @@ function App() {
             </button>
 
             <div className="detail-number">
-              PROJECT // {selectedProject.n}
+              PROJECT //{" "}
+              {selectedProject.n}
             </div>
 
             <div className="project-meta">
@@ -1215,7 +1319,10 @@ function App() {
               <div
                 className={`status status-${selectedProject.status
                   .toLowerCase()
-                  .replace(/ /g, "-")}`}
+                  .replace(
+                    / /g,
+                    "-"
+                  )}`}
               >
                 {selectedProject.status}
               </div>
@@ -1227,7 +1334,8 @@ function App() {
             </h2>
 
             <div className="detail-role">
-              ROLE // {selectedProject.role}
+              ROLE //{" "}
+              {selectedProject.role}
             </div>
 
             <p className="detail-description">
@@ -1238,24 +1346,28 @@ function App() {
 
               {selectedProject.technologies.map(
                 (tech) => (
+
                   <span
                     className="pill"
                     key={tech}
                   >
                     {tech}
                   </span>
+
                 )
               )}
 
             </div>
 
             {selectedProject.links &&
-              selectedProject.links.length > 0 && (
+              selectedProject.links.length >
+                0 && (
 
                 <div className="detail-links">
 
                   {selectedProject.links.map(
                     (link) => (
+
                       <a
                         key={link.url}
                         className="github-button"
@@ -1263,9 +1375,13 @@ function App() {
                         target="_blank"
                         rel="noreferrer"
                       >
+
                         <Github size={16} />
+
                         {link.label}
+
                       </a>
+
                     )
                   )}
 
@@ -1297,11 +1413,16 @@ function App() {
                       />
 
                       <div className="gallery-label">
+
                         FRAME{" "}
-                        {String(index + 1).padStart(
+
+                        {String(
+                          index + 1
+                        ).padStart(
                           2,
                           "0"
                         )}
+
                       </div>
 
                     </div>
@@ -1395,13 +1516,17 @@ function App() {
                     >
 
                       <span>
-                        {String(index + 1).padStart(
+                        {String(
+                          index + 1
+                        ).padStart(
                           2,
                           "0"
                         )}
                       </span>
 
-                      <p>{item}</p>
+                      <p>
+                        {item}
+                      </p>
 
                     </div>
 
