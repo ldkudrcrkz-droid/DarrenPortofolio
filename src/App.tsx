@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 
 import profilePhoto from "./photo/darren.jpeg";
-import bgm from "./assets/bgm.mp3";
+import bgm from "./assets/BGM.mp3";
 
 // ============================================================
 // PROJECT IMAGES
