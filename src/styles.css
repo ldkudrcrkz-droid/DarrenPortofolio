@@ -2934,6 +2934,10 @@ a {
     11px/1.7 var(--mono);
 }
 
+/* =========================================================
+   CONTACT LINKS — HIGH VISIBILITY
+========================================================= */
+
 .mail {
   display: inline-flex;
 
@@ -2943,33 +2947,82 @@ a {
 
   margin-top: 20px;
 
-  padding-bottom: 8px;
+  padding: 11px 14px;
 
-  color: #00101a;
+  color: #00131f;
 
-  border-bottom:
-    2px solid #00101a;
+  background:
+    linear-gradient(
+      135deg,
+      #b8f4ff,
+      #61d9ff
+    );
+
+  border: 1px solid #d9f8ff;
 
   font:
-    13px var(--mono);
+    600 13px var(--mono);
 
-  transition: 0.2s;
+  clip-path:
+    polygon(
+      7px 0,
+      100% 0,
+      100% calc(100% - 7px),
+      calc(100% - 7px) 100%,
+      0 100%,
+      0 7px
+    );
+
+  box-shadow:
+    0 0 20px rgba(34, 207, 255, 0.22);
+
+  transition:
+    0.2s;
+}
+
+.mail svg {
+  color: #003c5b;
+
+  filter:
+    drop-shadow(
+      0 0 4px rgba(0, 40, 65, 0.25)
+    );
 }
 
 .mail:hover {
-  color: var(--white);
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #087fbb,
+      #07558a
+    );
 
   border-color:
-    var(--white);
+    #a8efff;
 
-  text-shadow:
-    0 0 10px rgba(255, 255, 255, 0.3);
+  transform:
+    translate(-3px, -3px);
+
+  box-shadow:
+    5px 5px 0 rgba(0, 20, 35, 0.5),
+    0 0 28px rgba(34, 207, 255, 0.3);
 }
+
+.mail:hover svg {
+  color: #bdf5ff;
+}
+
+
+/* =========================================================
+   SOCIAL LINKS — GITHUB / LINKEDIN
+========================================================= */
 
 .socials {
   display: flex;
 
-  gap: 8px;
+  gap: 10px;
 
   margin-top: 45px;
 }
@@ -2981,15 +3034,20 @@ a {
 
   gap: 8px;
 
-  padding: 10px;
+  padding: 11px 14px;
 
-  color: #00101a;
+  color: #dff8ff;
+
+  background:
+    rgba(1, 15, 26, 0.9);
 
   border:
-    1px solid rgba(0, 16, 26, 0.8);
+    1px solid #4383a2;
 
   font:
-    9px var(--mono);
+    600 9px var(--mono);
+
+  letter-spacing: 0.04em;
 
   clip-path:
     polygon(
@@ -3001,21 +3059,45 @@ a {
       0 5px
     );
 
-  transition: 0.2s;
+  box-shadow:
+    0 0 12px rgba(34, 207, 255, 0.08);
+
+  transition:
+    0.2s;
+}
+
+.socials a svg {
+  color: #72e4ff;
+
+  filter:
+    drop-shadow(
+      0 0 5px rgba(34, 207, 255, 0.35)
+    );
 }
 
 .socials a:hover {
-  background:
-    #00101a;
+  color: #00131f;
 
-  color:
-    var(--cyan-soft);
+  background:
+    linear-gradient(
+      135deg,
+      #b8f4ff,
+      #4fd6ff
+    );
 
   border-color:
-    var(--cyan-soft);
+    #d8f9ff;
+
+  transform:
+    translate(-3px, -3px);
 
   box-shadow:
-    0 0 18px rgba(34, 207, 255, 0.18);
+    5px 5px 0 rgba(0, 20, 35, 0.5),
+    0 0 25px rgba(34, 207, 255, 0.3);
+}
+
+.socials a:hover svg {
+  color: #003c5b;
 }
 
 /* =========================================================
