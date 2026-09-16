@@ -568,7 +568,7 @@ function App() {
       </header>
 
 
-      {/* ======================================================
+      {/* ======================================================np
           HERO
       ====================================================== */}
 
@@ -585,15 +585,18 @@ function App() {
           <div className="red-label">
             [ 001 // PORTFOLIO ]
           </div>
-
-          <h1 className="hero-title">
-            LIE DARREN
-            <br />
-            <span>
-              KEEFE UTOMO
-            </span>
-          </h1>
-
+<h1 className="hero-title glitch-name">
+  <span className="glitch-text" data-text="LIE DARREN">
+    LIE DARREN
+  </span>
+  <br />
+  <span
+    className="glitch-text"
+    data-text="KEEFE UTOMO"
+  >
+    KEEFE UTOMO
+  </span>
+</h1>
           <p>
             Computer Science student focused on{" "}
             <b>
